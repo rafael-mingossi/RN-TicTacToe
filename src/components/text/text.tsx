@@ -1,16 +1,12 @@
-import { ReactNode, FC } from "react";
+import { ReactNode } from "react";
 import { Text as NativeText, TextProps as NativeTextProps } from "react-native";
 
 type TextProps = {
-  weight: "400" | "700" | string;
+  weight: "400" | "700";
   children: ReactNode;
 } & NativeTextProps;
 
-const defaultProps = {
-  weight: "400",
-};
-
-const Text: FC<TextProps> = ({ children, style, weight, ...props }) => {
+const Text = ({ children, style, weight, ...props }: TextProps) => {
   let fontFamily;
   if (weight === "400") {
     fontFamily = "DeliusUnicase_400Regular";
@@ -26,5 +22,5 @@ const Text: FC<TextProps> = ({ children, style, weight, ...props }) => {
     </NativeText>
   );
 };
-Text.defaultProps = defaultProps;
+Text.defaultProps = { weight: "400" };
 export default Text;

@@ -1,12 +1,11 @@
-import { Text, AppBootstrap } from "@components";
+import { AppBootstrap } from "@components";
 import { FC } from "react";
+import Navigator from "@config/navigator";
 
 const App: FC = () => {
   return (
     <AppBootstrap>
-      <Text style={{ fontSize: 35 }} weight={"700"}>
-        Hello World
-      </Text>
+      <Navigator />
     </AppBootstrap>
   );
 };
