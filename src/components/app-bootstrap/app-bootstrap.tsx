@@ -6,7 +6,7 @@ import {
 } from "@expo-google-fonts/delius-unicase";
 import * as SplashScreen from "expo-splash-screen";
 
-SplashScreen.preventAutoHideAsync().then((r) => console.log(r));
+SplashScreen.preventAutoHideAsync().then(() => {});
 
 type AppBootstrapProps = {
   children: ReactNode;
@@ -25,7 +25,7 @@ const AppBootstrap: FC<AppBootstrapProps> = ({ children }) => {
   };
 
   useEffect(() => {
-    stopSplash().then((r) => {});
+    stopSplash().then(() => {});
   }, [fontsLoaded]);
 
   return fontsLoaded ? <>{children}</> : null;

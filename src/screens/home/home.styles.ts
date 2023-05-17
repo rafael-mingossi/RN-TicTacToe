@@ -11,7 +11,8 @@ const styles = StyleSheet.create({
     width: "100%",
     resizeMode: "contain",
   },
-  buttons: {},
+  buttons: { marginTop: 30 },
+  button: { marginBottom: 20 },
 });
 
 export default styles;
