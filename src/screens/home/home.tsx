@@ -1,4 +1,4 @@
-import { View, ScrollView, Image, TouchableOpacity } from "react-native";
+import { View, ScrollView, Image } from "react-native";
 import styles from "./home.styles";
 import { FC } from "react";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";

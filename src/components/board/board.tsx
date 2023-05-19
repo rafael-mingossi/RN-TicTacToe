@@ -6,9 +6,10 @@ import { BoardState } from "@utils";
 type BoardProps = {
   state: BoardState;
   size: number;
+  disabled?: boolean;
   onCellPressed?: (index: number) => void;
 };
-const Board: FC<BoardProps> = ({ state, size, onCellPressed }) => {
+const Board: FC<BoardProps> = ({ state, size, disabled, onCellPressed }) => {
   return (
     <View
       style={{
@@ -22,6 +23,7 @@ const Board: FC<BoardProps> = ({ state, size, onCellPressed }) => {
       {state.map((cell, index) => {
         return (
           <TouchableOpacity
+            disabled={cell !== null || disabled}
             onPress={() => onCellPressed && onCellPressed(index)}
             key={index}
             style={{
