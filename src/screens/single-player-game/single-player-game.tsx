@@ -1,10 +1,14 @@
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, Dimensions, View } from "react-native";
 import styles from "./single-player-game.styles";
-import { GradientBg, Board } from "@components";
+import { GradientBg, Board, Text, Button } from "@components";
 import { FC, useEffect, useState } from "react";
-import { BoardState, isTerminal, getBestMove, isEmpty } from "@utils";
+import { BoardState, isTerminal, getBestMove, isEmpty, Cell } from "@utils";
+// @ts-ignore
+import { useSounds } from "@hooks";
 
+const SCREEN_WIDTH = Dimensions.get("screen").width;
 const SinglePlayerGame: FC = () => {
+  const playSound = useSounds();
   const [state, setState] = useState<BoardState>([
     null,
     null,
@@ -21,6 +25,13 @@ const SinglePlayerGame: FC = () => {
     Math.random() < 0.5 ? "HUMAN" : "BOT"
   );
   const [isHumanMaximizing, setIsHumanMaximizing] = useState<boolean>(true);
+
+  const [gamesCount, setGamesCount] = useState({
+    wins: 0,
+    losses: 0,
+    draws: 0,
+  });
+
   const gameResult = isTerminal(state);
 
   const insertCell = (cell: number, symbol: "x" | "o"): void => {
@@ -29,6 +40,12 @@ const SinglePlayerGame: FC = () => {
 
     stateCopy[cell] = symbol;
     setState(stateCopy);
+
+    try {
+      symbol === "x" ? playSound("pop1") : playSound("pop2");
+    } catch (e) {
+      console.log("error playing sound", e);
+    }
   };
 
   //HUMAN PLAY WILL BE HANDLED HERE
@@ -38,9 +55,39 @@ const SinglePlayerGame: FC = () => {
     setTurn("BOT");
   };
 
+  const getWinner = (winnerSymbol: Cell): "HUMAN" | "BOT" | "DRAW" => {
+    if (winnerSymbol === "x") {
+      return isHumanMaximizing ? "HUMAN" : "BOT";
+    }
+    if (winnerSymbol === "o") {
+      return isHumanMaximizing ? "BOT" : "HUMAN";
+    }
+    return "DRAW";
+  };
+
+  const newGame = () => {
+    setState([null, null, null, null, null, null, null, null, null]);
+    setTurn(Math.random() < 0.5 ? "HUMAN" : "BOT");
+  };
+
   useEffect(() => {
     if (gameResult) {
-      //TODO back here later
+      const winner = getWinner(gameResult.winner);
+
+      if (winner === "HUMAN") {
+        playSound("win");
+        setGamesCount({ ...gamesCount, wins: gamesCount.wins + 1 });
+      }
+
+      if (winner === "BOT") {
+        playSound("loss");
+        setGamesCount({ ...gamesCount, losses: gamesCount.losses + 1 });
+      }
+
+      if (winner === "DRAW") {
+        playSound("draw");
+        setGamesCount({ ...gamesCount, draws: gamesCount.draws + 1 });
+      }
     } else {
       if (turn === "BOT") {
         //Check the center and corners to start playing
@@ -69,12 +116,42 @@ const SinglePlayerGame: FC = () => {
   return (
     <GradientBg>
       <SafeAreaView style={styles.container}>
+        <View>
+          <Text style={styles.difficulty}>Difficulty: Hard</Text>
+          <View style={styles.results}>
+            <View style={styles.resultsBox}>
+              <Text style={styles.resultsTitle}>Wins</Text>
+              <Text style={styles.resultsCount}>{gamesCount.wins}</Text>
+            </View>
+            <View style={styles.resultsBox}>
+              <Text style={styles.resultsTitle}>Draws</Text>
+              <Text style={styles.resultsCount}>{gamesCount.draws}</Text>
+            </View>
+            <View style={styles.resultsBox}>
+              <Text style={styles.resultsTitle}>Losses</Text>
+              <Text style={styles.resultsCount}>{gamesCount.losses}</Text>
+            </View>
+          </View>
+        </View>
+
         <Board
           disabled={!!isTerminal(state) || turn !== "HUMAN"}
           onCellPressed={(cell) => handleOnCellPress(cell)}
-          size={300}
+          size={SCREEN_WIDTH - 90} //or 60
           state={state}
+          gameResult={gameResult}
         />
+
+        {gameResult && (
+          <View style={styles.modal}>
+            <Text style={styles.modalText}>
+              {getWinner(gameResult.winner) === "HUMAN" && "You Won"}
+              {getWinner(gameResult.winner) === "BOT" && "You Lose"}
+              {getWinner(gameResult.winner) === "DRAW" && "It's a Draw"}
+            </Text>
+            <Button title="Play Again" onPress={() => newGame()} />
+          </View>
+        )}
       </SafeAreaView>
     </GradientBg>
   );

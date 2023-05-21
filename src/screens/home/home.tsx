@@ -22,7 +22,11 @@ const Home: FC<HomeProps> = ({ navigation }) => {
           />
           <Button style={styles.button} title={"Multiplayer"} />
           <Button style={styles.button} title={"Login"} />
-          <Button style={styles.button} title={"Settings"} />
+          <Button
+            onPress={() => navigation.navigate("Settings")}
+            style={styles.button}
+            title={"Settings"}
+          />
         </View>
       </ScrollView>
     </GradientBg>

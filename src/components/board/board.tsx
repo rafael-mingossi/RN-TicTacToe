@@ -1,24 +1,33 @@
 import { View, TouchableOpacity } from "react-native";
 import { FC } from "react";
 import Text from "../text/text";
-import { BoardState } from "@utils";
+import { BoardResult, BoardState } from "@utils";
+import BoardLine from "./board-line";
+import styles from "./board.style";
 
 type BoardProps = {
   state: BoardState;
   size: number;
   disabled?: boolean;
   onCellPressed?: (index: number) => void;
+  gameResult?: BoardResult | false;
 };
-const Board: FC<BoardProps> = ({ state, size, disabled, onCellPressed }) => {
+const Board: FC<BoardProps> = ({
+  state,
+  size,
+  disabled,
+  gameResult,
+  onCellPressed,
+}) => {
   return (
     <View
-      style={{
-        width: size,
-        height: size,
-        backgroundColor: "green",
-        flexDirection: "row",
-        flexWrap: "wrap",
-      }}
+      style={[
+        {
+          width: size,
+          height: size,
+        },
+        styles.board,
+      ]}
     >
       {state.map((cell, index) => {
         return (
@@ -26,19 +35,19 @@ const Board: FC<BoardProps> = ({ state, size, disabled, onCellPressed }) => {
             disabled={cell !== null || disabled}
             onPress={() => onCellPressed && onCellPressed(index)}
             key={index}
-            style={{
-              width: "33.333%",
-              height: "33.333%",
-              backgroundColor: "white",
-              borderWidth: 1,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
+            style={[styles.cell, styles[`cell${index}` as "cell"]]}
           >
-            <Text style={{ fontSize: size / 8 }}>{cell}</Text>
+            <Text
+              weight={"700"}
+              style={[{ fontSize: size / 7 }, styles.cellText]}
+            >
+              {cell}
+            </Text>
           </TouchableOpacity>
         );
       })}
+
+      {gameResult && <BoardLine size={size} gameResult={gameResult} />}
     </View>
   );
 };
