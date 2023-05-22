@@ -3,12 +3,14 @@ import styles from "./single-player-game.styles";
 import { GradientBg, Board, Text, Button } from "@components";
 import { FC, useEffect, useState } from "react";
 import { BoardState, isTerminal, getBestMove, isEmpty, Cell } from "@utils";
+import { useSettings, difficulties } from "@contexts/settings-context";
 // @ts-ignore
 import { useSounds } from "@hooks";
 
 const SCREEN_WIDTH = Dimensions.get("screen").width;
 const SinglePlayerGame: FC = () => {
   const playSound = useSounds();
+  const { settings } = useSettings();
   const [state, setState] = useState<BoardState>([
     null,
     null,
@@ -105,7 +107,12 @@ const SinglePlayerGame: FC = () => {
           setIsHumanMaximizing(false); //that is the case when the BOT starts
           setTurn("HUMAN");
         } else {
-          const best = getBestMove(state, !isHumanMaximizing, 0, -1);
+          const best = getBestMove(
+            state,
+            !isHumanMaximizing,
+            0,
+            parseInt(settings ? settings?.difficulty : "-1")
+          );
           insertCell(best, isHumanMaximizing ? "o" : "x");
           setTurn("HUMAN");
         }
@@ -117,7 +124,10 @@ const SinglePlayerGame: FC = () => {
     <GradientBg>
       <SafeAreaView style={styles.container}>
         <View>
-          <Text style={styles.difficulty}>Difficulty: Hard</Text>
+          <Text style={styles.difficulty}>
+            Difficulty:{" "}
+            {settings ? difficulties[settings.difficulty] : "Impossible"}
+          </Text>
           <View style={styles.results}>
             <View style={styles.resultsBox}>
               <Text style={styles.resultsTitle}>Wins</Text>

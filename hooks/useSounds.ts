@@ -1,9 +1,11 @@
 import { useEffect, useRef } from "react";
 import { Audio } from "expo-av";
 import * as Haptics from "expo-haptics";
+import { useSettings } from "@contexts/settings-context";
 
 type SoundType = "pop1" | "pop2" | "win" | "loss" | "draw";
 const useSounds = () => {
+  const { settings } = useSettings();
   ////SOUND CONTROL REFS
   const popSoundRef = useRef<Audio.Sound | null>(null);
   const pop2SoundRef = useRef<Audio.Sound | null>(null);
@@ -22,30 +24,35 @@ const useSounds = () => {
 
     try {
       const status = await soundsMap[sound].current?.getStatusAsync();
-      status && status.isLoaded && soundsMap[sound].current?.replayAsync();
+      status &&
+        status.isLoaded &&
+        settings?.sounds &&
+        soundsMap[sound].current?.replayAsync();
 
-      switch (sound) {
-        case "pop1":
-        case "pop2":
-          await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-          break;
-        case "win":
-          await Haptics.notificationAsync(
-            Haptics.NotificationFeedbackType.Success
-          );
-          break;
-        case "loss":
-          await Haptics.notificationAsync(
-            Haptics.NotificationFeedbackType.Error
-          );
-          break;
-        case "draw":
-          await Haptics.notificationAsync(
-            Haptics.NotificationFeedbackType.Warning
-          );
-          break;
-        default:
-          break;
+      if (settings?.haptics) {
+        switch (sound) {
+          case "pop1":
+          case "pop2":
+            await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            break;
+          case "win":
+            await Haptics.notificationAsync(
+              Haptics.NotificationFeedbackType.Success
+            );
+            break;
+          case "loss":
+            await Haptics.notificationAsync(
+              Haptics.NotificationFeedbackType.Error
+            );
+            break;
+          case "draw":
+            await Haptics.notificationAsync(
+              Haptics.NotificationFeedbackType.Warning
+            );
+            break;
+          default:
+            break;
+        }
       }
     } catch (e) {
       console.log(e);

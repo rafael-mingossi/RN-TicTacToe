@@ -1,4 +1,4 @@
-import { View, StyleSheet, Animated } from "react-native";
+import { StyleSheet, Animated } from "react-native";
 import { BoardResult, colours } from "@utils";
 import { FC, useEffect, useRef } from "react";
 
