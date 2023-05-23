@@ -21,7 +21,11 @@ const Home: FC<HomeProps> = ({ navigation }) => {
             title={"Single Player"}
           />
           <Button style={styles.button} title={"Multiplayer"} />
-          <Button style={styles.button} title={"Login"} />
+          <Button
+            style={styles.button}
+            title={"Login"}
+            onPress={() => navigation.navigate("Login")}
+          />
           <Button
             onPress={() => navigation.navigate("Settings")}
             style={styles.button}
