@@ -62,7 +62,7 @@ const Navigator: FC = () => {
         <Stack.Screen
           name="SignUp"
           component={SignUp}
-          options={{ headerShown: true }}
+          options={{ headerShown: true, title: "Sign-Up" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

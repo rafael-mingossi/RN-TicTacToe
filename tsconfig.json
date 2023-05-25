@@ -8,7 +8,7 @@
       "@screens": ["src/screens"],
       "@utils": ["src/utils"],
       "@components": ["src/components"],
-      "@hooks": ["/hooks/*"],
+      "@hooks/*": ["/hooks/*"],
       "@config/*": ["src/config/*"],
       "@assets/*": ["/assets/*"],
       "@contexts/*": ["src/contexts/*"],

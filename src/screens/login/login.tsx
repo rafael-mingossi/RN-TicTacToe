@@ -1,5 +1,9 @@
-import { ScrollView, TextInput as NativeTextInput } from "react-native";
-import { GradientBg, TextInput, Button } from "@components";
+import {
+  ScrollView,
+  TextInput as NativeTextInput,
+  TouchableOpacity,
+} from "react-native";
+import { GradientBg, TextInput, Button, Text } from "@components";
 import styles from "./login.styles";
 import { FC, useRef, useState } from "react";
 import { Auth } from "aws-amplify";
@@ -56,6 +60,10 @@ const Login: FC<LoginProps> = ({ navigation }) => {
         />
 
         <Button loading={loading} title="Login" onPress={login} />
+
+        <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+          <Text style={styles.link}>Don&apos;t have an account?</Text>
+        </TouchableOpacity>
       </ScrollView>
     </GradientBg>
   );
