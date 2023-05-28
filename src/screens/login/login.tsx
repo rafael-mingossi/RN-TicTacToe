@@ -9,6 +9,7 @@ import { FC, useRef, useState } from "react";
 import { Auth } from "aws-amplify";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackNavigatorParams } from "@config/navigator";
+import Toast from "react-native-toast-message";
 
 type LoginProps = {
   navigation: NativeStackNavigationProp<StackNavigatorParams, "Login">;
@@ -18,8 +19,8 @@ const Login: FC<LoginProps> = ({ navigation }) => {
   const passwordRef = useRef<NativeTextInput | null>(null);
 
   const [form, setForm] = useState({
-    username: "test",
-    password: "12345678",
+    username: "",
+    password: "",
   });
   const [loading, setLoading] = useState(false);
 
@@ -32,8 +33,33 @@ const Login: FC<LoginProps> = ({ navigation }) => {
     try {
       await Auth.signIn(username, password);
       navigation.navigate("Home");
-    } catch (error) {
-      console.log("login error ->> ", error);
+    } catch (error: any) {
+      if (form.username === "" || form.password === "") {
+        Toast.show({
+          type: "error",
+          text1: "Fields cannot be empty",
+          text2: "Add your credentials and try again",
+        });
+      } else if (error.toString().includes("UserNotConfirmedException")) {
+        Toast.show({
+          type: "error",
+          text1: "User not confirmed",
+          text2: "Confirm your registration and try again",
+        });
+        navigation.navigate("SignUp", { username });
+      } else if (error.toString().includes("UserNotFoundException")) {
+        Toast.show({
+          type: "error",
+          text1: "User does not exist",
+          text2: "Check your username",
+        });
+      } else if (error.toString().includes("NotAuthorizedException")) {
+        Toast.show({
+          type: "error",
+          text1: "Wrong username or password",
+          text2: "Check your credentials",
+        });
+      }
     }
     setLoading(false);
   };

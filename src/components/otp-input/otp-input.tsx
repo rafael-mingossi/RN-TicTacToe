@@ -1,8 +1,8 @@
 import { useIsFocused } from "@react-navigation/native";
 import { FC, useRef, useState } from "react";
-import { TextInput, TouchableOpacity, View } from "react-native";
+import { TextInput, View } from "react-native";
 import styles from "./otp-input.styles";
-import { Text, Button } from "../index";
+import { Button } from "../index";
 import useTimeout from "../../../hooks/useTimeout";
 
 export interface IOTPInputProps {
@@ -113,9 +113,6 @@ const OTPInput: FC<IOTPInputProps> = (props) => {
         onPress={() => onConclude()}
         style={{ marginTop: 30, marginBottom: 30 }}
       />
-      {/*<TouchableOpacity onPress={() => onConclude()} style={styles.btnWrapper}>*/}
-      {/*  <Text style={styles.btnText}>Submit Code</Text>*/}
-      {/*</TouchableOpacity>*/}
     </View>
   );
 };

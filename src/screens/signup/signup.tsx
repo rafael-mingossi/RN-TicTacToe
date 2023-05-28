@@ -10,19 +10,23 @@ import { GradientBg, TextInput, Button } from "@components";
 import { Text } from "../../components";
 import OTPInput from "../../components/otp-input/otp-input";
 import styles from "./signup.styles";
-import { FC, useRef, useState } from "react";
+import { FC, useRef, useState, useEffect } from "react";
 import { Auth } from "aws-amplify";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { StackNavigatorParams } from "@config/navigator";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RouteProp } from "@react-navigation/native";
 import { colours } from "@utils";
 import Toast from "react-native-toast-message";
 
 type SignUpProps = {
   navigation: NativeStackNavigationProp<StackNavigatorParams, "SignUp">;
+  route: RouteProp<StackNavigatorParams, "SignUp">;
 };
 
-const Signup: FC<SignUpProps> = ({ navigation }) => {
+const Signup: FC<SignUpProps> = ({ navigation, route }) => {
+  const unconfirmedUsername = route.params?.username;
+
   const passwordRef = useRef<NativeTextInput | null>(null);
   const emailRef = useRef<NativeTextInput | null>(null);
   const nameRef = useRef<NativeTextInput | null>(null);
@@ -30,13 +34,15 @@ const Signup: FC<SignUpProps> = ({ navigation }) => {
   const headerHeight = useHeaderHeight();
 
   const [form, setForm] = useState({
-    username: "rafaelM",
-    email: "rafaelmingossi@gmail.com",
-    name: "Rafael",
-    password: "12345678",
+    username: "",
+    email: "",
+    name: "",
+    password: "",
   });
   const [loading, setLoading] = useState(false);
-  const [step, setStep] = useState<"signUp" | "otp">("otp");
+  const [step, setStep] = useState<"signUp" | "otp">(
+    unconfirmedUsername ? "otp" : "signUp"
+  );
   const [confirming, setConfirming] = useState(false);
   const [resending, setResending] = useState(false);
   const [code, setCode] = useState<string>("");
@@ -85,7 +91,10 @@ const Signup: FC<SignUpProps> = ({ navigation }) => {
   const confirmCode = async (code: string) => {
     setConfirming(true);
     try {
-      const res = await Auth.confirmSignUp(form.username, code);
+      const res = await Auth.confirmSignUp(
+        form.username || unconfirmedUsername || "",
+        code
+      );
       if (res) {
         setCode("");
         Toast.show({
@@ -120,6 +129,12 @@ const Signup: FC<SignUpProps> = ({ navigation }) => {
     setResending(false);
   };
 
+  useEffect(() => {
+    if (unconfirmedUsername) {
+      resendCode(unconfirmedUsername).then(() => {});
+    }
+  }, []);
+
   return (
     <GradientBg>
       <KeyboardAvoidingView
@@ -143,7 +158,16 @@ const Signup: FC<SignUpProps> = ({ navigation }) => {
                 {resending ? (
                   <ActivityIndicator color={colours.lightGreen} />
                 ) : (
-                  <TouchableOpacity onPress={() => resendCode(form.username)}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (form.username) {
+                        resendCode(form.username).then(() => {});
+                      }
+                      if (unconfirmedUsername) {
+                        resendCode(unconfirmedUsername).then(() => {});
+                      }
+                    }}
+                  >
                     <Text style={styles.resendLink}>Resend Code</Text>
                   </TouchableOpacity>
                 )}

@@ -17,6 +17,12 @@
       },
       "api": {
         "rntictactoe": {}
+      },
+      "function": {
+        "graphQlLambdaAuthorizer0dd52899": {
+          "deploymentBucketName": "amplify-rntictactoe-test-130522-deployment",
+          "s3Key": "amplify-builds/graphQlLambdaAuthorizer0dd52899-6b4f48373356504a4d53-build.zip"
+        }
       }
     }
   }
