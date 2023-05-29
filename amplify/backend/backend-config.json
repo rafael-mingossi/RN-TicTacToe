@@ -69,6 +69,22 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "postConfirmation": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "rntictactoe"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "parameters": {
@@ -85,6 +101,22 @@
         {
           "category": "function",
           "resourceName": "graphQlLambdaAuthorizer0dd52899"
+        }
+      ]
+    },
+    "AMPLIFY_function_postConfirmation_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "postConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_postConfirmation_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "postConfirmation"
         }
       ]
     }

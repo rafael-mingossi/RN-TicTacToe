@@ -124,7 +124,6 @@ export type ModelPlayerConnection = {
 export type ModelSubscriptionPlayerFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   cognitoID?: ModelSubscriptionStringInput | null,
-  username?: ModelSubscriptionStringInput | null,
   name?: ModelSubscriptionStringInput | null,
   email?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionPlayerFilterInput | null > | null,

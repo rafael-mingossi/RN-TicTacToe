@@ -22,6 +22,10 @@
         "graphQlLambdaAuthorizer0dd52899": {
           "deploymentBucketName": "amplify-rntictactoe-test-130522-deployment",
           "s3Key": "amplify-builds/graphQlLambdaAuthorizer0dd52899-6b4f48373356504a4d53-build.zip"
+        },
+        "postConfirmation": {
+          "deploymentBucketName": "amplify-rntictactoe-test-130522-deployment",
+          "s3Key": "amplify-builds/postConfirmation-6a3464673935444a6c76-build.zip"
         }
       }
     }
