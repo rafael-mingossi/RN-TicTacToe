@@ -1,4 +1,5 @@
-type Player @model
+type Player
+  @model
   @auth(rules: [
     {allow: private, operations: [read]} #only logged in users can read
     {allow: owner, ownerField: "username", operations: [update]} #users can only change their own details
@@ -10,3 +11,4 @@ type Player @model
   name: String!
   email: AWSEmail!
 }
+#{allow: private, provider: iam, operations: [read, create, update, delete]}

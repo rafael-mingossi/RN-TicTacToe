@@ -85,6 +85,52 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "postSignUpSaveUserDb": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "rntictactoe"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "preAuth": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "rntictactoe"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "saveToDb": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput"
+          ],
+          "category": "api",
+          "resourceName": "rntictactoe"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "parameters": {
@@ -117,6 +163,38 @@
         {
           "category": "function",
           "resourceName": "postConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_preAuth_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "preAuth"
+        }
+      ]
+    },
+    "AMPLIFY_function_preAuth_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "preAuth"
+        }
+      ]
+    },
+    "AMPLIFY_function_saveToDb_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "saveToDb"
+        }
+      ]
+    },
+    "AMPLIFY_function_saveToDb_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "saveToDb"
         }
       ]
     }

@@ -13,6 +13,8 @@ require("cross-fetch/polyfill");
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
 exports.handler = async (event, context, callback) => {
+  console.log("preAuth ->", event);
+
   const graphqlClient = new appsync.AWSAppSyncClient({
     url: process.env.API_RNTICTACTOE_GRAPHQLAPIENDPOINTOUTPUT,
     region: process.env.REGION,
@@ -26,6 +28,14 @@ exports.handler = async (event, context, callback) => {
     },
     disableOffline: true,
   });
+
+  const query = gql`
+    query getPlayer($username: String!) {
+      getPlayer(username: $username) {
+        id
+      }
+    }
+  `;
 
   const mutation = gql`
     mutation createPlayer(
@@ -48,19 +58,11 @@ exports.handler = async (event, context, callback) => {
   `;
 
   try {
-    await graphqlClient.mutate({
-      mutation,
+    const response = await graphqlClient.query({
+      query,
       variables: {
-        name: event.request.userAttributes.name,
         username: event.userName,
-        cognitoID: event.request.userAttributes.sub,
-        email: event.request.userAttributes.email,
       },
-      authMode: "AWS_IAM",
     });
-
-    callback(null, event);
-  } catch (e) {
-    callback(e);
-  }
+  } catch (e) {}
 };

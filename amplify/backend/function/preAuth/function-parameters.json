@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "api": {
+      "rntictactoe": [
+        "Query",
+        "Mutation"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

@@ -25,8 +25,17 @@
         },
         "postConfirmation": {
           "deploymentBucketName": "amplify-rntictactoe-test-130522-deployment",
-          "s3Key": "amplify-builds/postConfirmation-6a3464673935444a6c76-build.zip"
-        }
+          "s3Key": "amplify-builds/postConfirmation-72722f6a4f7558634c79-build.zip"
+        },
+        "saveToDb": {
+          "deploymentBucketName": "amplify-rntictactoe-test-130522-deployment",
+          "s3Key": "amplify-builds/saveToDb-75547858464a676f324a-build.zip"
+        },
+        "preAuth": {
+          "deploymentBucketName": "amplify-rntictactoe-test-130522-deployment",
+          "s3Key": "amplify-builds/preAuth-6a68726a717041504433-build.zip"
+        },
+        "postSignUpSaveUserDb": {}
       }
     }
   }
