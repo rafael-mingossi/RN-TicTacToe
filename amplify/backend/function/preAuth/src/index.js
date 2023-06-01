@@ -64,5 +64,28 @@ exports.handler = async (event, context, callback) => {
         username: event.userName,
       },
     });
-  } catch (e) {}
+
+    if (response.data.getPlayer) {
+      callback(null, event);
+    } else {
+      try {
+        await graphqlClient.mutate({
+          mutation,
+          variables: {
+            name: event.request.userAttributes.name,
+            username: event.userName,
+            cognitoID: event.request.userAttributes.sub,
+            email: event.request.userAttributes.email,
+          },
+          authMode: "AWS_IAM",
+        });
+
+        callback(null, event);
+      } catch (e) {
+        callback(e);
+      }
+    }
+  } catch (error) {
+    callback(error);
+  }
 };

@@ -33,7 +33,7 @@
         },
         "preAuth": {
           "deploymentBucketName": "amplify-rntictactoe-test-130522-deployment",
-          "s3Key": "amplify-builds/preAuth-6a68726a717041504433-build.zip"
+          "s3Key": "amplify-builds/preAuth-444e78634878646f5442-build.zip"
         },
         "postSignUpSaveUserDb": {}
       }

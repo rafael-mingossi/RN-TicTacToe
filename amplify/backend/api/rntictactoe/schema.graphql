@@ -11,4 +11,28 @@ type Player
   name: String!
   email: AWSEmail!
 }
-#{allow: private, provider: iam, operations: [read, create, update, delete]}
+
+type Game
+  @model
+  {
+    id: ID!
+    status: GameStatus!
+    owners: [String!]!
+    initiator: String!
+    turn: String!
+    state: [Symbol!]!
+    winner: String
+  }
+
+enum GameStatus{
+  REQUESTED
+  DECLINED
+  ACTIVE
+  FINISHED
+  CANCELLED
+}
+
+enum Symbol {
+  x
+  o
+}
