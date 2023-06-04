@@ -1,11 +1,14 @@
 /* Amplify Params - DO NOT EDIT
-	API_RNTICTACTOE_GRAPHQLAPIENDPOINTOUTPUT
-	API_RNTICTACTOE_GRAPHQLAPIIDOUTPUT
-	API_RNTICTACTOE_GRAPHQLAPIKEYOUTPUT
+	API_RNTICTAC_GRAPHQLAPIENDPOINTOUTPUT
+	API_RNTICTAC_GRAPHQLAPIIDOUTPUT
+	API_RNTICTAC_GRAPHQLAPIKEYOUTPUT
 	ENV
 	REGION
 Amplify Params - DO NOT EDIT */
 
+/**
+ * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
+ */
 const appsync = require("aws-appsync");
 const gql = require("graphql-tag");
 require("cross-fetch/polyfill");
@@ -13,8 +16,10 @@ require("cross-fetch/polyfill");
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
 exports.handler = async (event, context, callback) => {
+  console.log("preAuth ->", event);
+
   const graphqlClient = new appsync.AWSAppSyncClient({
-    url: process.env.API_RNTICTACTOE_GRAPHQLAPIENDPOINTOUTPUT,
+    url: process.env.API_RNTICTAC_GRAPHQLAPIENDPOINTOUTPUT,
     region: process.env.REGION,
     auth: {
       type: "AWS_IAM",
@@ -26,6 +31,14 @@ exports.handler = async (event, context, callback) => {
     },
     disableOffline: true,
   });
+
+  const query = gql`
+    query getPlayer($username: String!) {
+      getPlayer(username: $username) {
+        id
+      }
+    }
+  `;
 
   const mutation = gql`
     mutation createPlayer(
@@ -48,19 +61,34 @@ exports.handler = async (event, context, callback) => {
   `;
 
   try {
-    await graphqlClient.mutate({
-      mutation,
+    const response = await graphqlClient.query({
+      query,
       variables: {
-        name: event.request.userAttributes.name,
         username: event.userName,
-        cognitoID: event.request.userAttributes.sub,
-        email: event.request.userAttributes.email,
       },
-      authMode: "AWS_IAM",
     });
 
-    callback(null, event);
-  } catch (e) {
-    callback(e);
+    if (response.data.getPlayer) {
+      callback(null, event);
+    } else {
+      try {
+        await graphqlClient.mutate({
+          mutation,
+          variables: {
+            name: event.request.userAttributes.name,
+            username: event.userName,
+            cognitoID: event.request.userAttributes.sub,
+            email: event.request.userAttributes.email,
+          },
+          authMode: "AWS_IAM",
+        });
+
+        callback(null, event);
+      } catch (e) {
+        callback(e);
+      }
+    }
+  } catch (error) {
+    callback(error);
   }
 };

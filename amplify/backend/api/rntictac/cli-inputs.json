@@ -1,23 +1,23 @@
 {
   "version": 1,
   "serviceConfiguration": {
-    "apiName": "rntictactoe",
+    "apiName": "rntictac",
     "serviceName": "AppSync",
     "defaultAuthType": {
       "mode": "AMAZON_COGNITO_USER_POOLS",
-      "cognitoUserPoolId": "authrntictactoeea1bec6f"
+      "cognitoUserPoolId": "authrntictacfd5bf92f"
     },
-    "conflictResolution": {},
     "additionalAuthTypes": [
       {
         "mode": "API_KEY",
         "expirationTime": 7,
-        "apiKeyExpirationDate": "2023-06-02T12:31:53.818Z",
-        "keyDescription": "testapi"
+        "apiKeyExpirationDate": "2023-06-11T12:26:05.575Z",
+        "keyDescription": "rntictac"
       },
       {
         "mode": "AWS_IAM"
       }
-    ]
+    ],
+    "conflictResolution": {}
   }
 }

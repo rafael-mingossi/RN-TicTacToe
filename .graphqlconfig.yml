@@ -1,6 +1,6 @@
 projects:
-  rntictactoe:
-    schemaPath: amplify/backend/api/rntictactoe/build/schema.graphql
+  rntictac:
+    schemaPath: amplify/backend/api/rntictac/build/schema.graphql
     includes:
       - src/graphql/**/*.ts
     excludes:

@@ -16,17 +16,17 @@
     "s3Key": {
       "Type": "String"
     },
-    "apirntictactoeGraphQLAPIIdOutput": {
+    "apirntictacGraphQLAPIIdOutput": {
       "Type": "String",
-      "Default": "apirntictactoeGraphQLAPIIdOutput"
+      "Default": "apirntictacGraphQLAPIIdOutput"
     },
-    "apirntictactoeGraphQLAPIEndpointOutput": {
+    "apirntictacGraphQLAPIEndpointOutput": {
       "Type": "String",
-      "Default": "apirntictactoeGraphQLAPIEndpointOutput"
+      "Default": "apirntictacGraphQLAPIEndpointOutput"
     },
-    "apirntictactoeGraphQLAPIKeyOutput": {
+    "apirntictacGraphQLAPIKeyOutput": {
       "Type": "String",
-      "Default": "apirntictactoeGraphQLAPIKeyOutput"
+      "Default": "apirntictacGraphQLAPIKeyOutput"
     }
   },
   "Conditions": {
@@ -59,12 +59,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "postConfirmation",
+            "preAuthUser",
             {
               "Fn::Join": [
                 "",
                 [
-                  "postConfirmation",
+                  "preAuthUser",
                   "-",
                   {
                     "Ref": "env"
@@ -82,14 +82,14 @@
             "REGION": {
               "Ref": "AWS::Region"
             },
-            "API_RNTICTACTOE_GRAPHQLAPIIDOUTPUT": {
-              "Ref": "apirntictactoeGraphQLAPIIdOutput"
+            "API_RNTICTAC_GRAPHQLAPIIDOUTPUT": {
+              "Ref": "apirntictacGraphQLAPIIdOutput"
             },
-            "API_RNTICTACTOE_GRAPHQLAPIENDPOINTOUTPUT": {
-              "Ref": "apirntictactoeGraphQLAPIEndpointOutput"
+            "API_RNTICTAC_GRAPHQLAPIENDPOINTOUTPUT": {
+              "Ref": "apirntictacGraphQLAPIEndpointOutput"
             },
-            "API_RNTICTACTOE_GRAPHQLAPIKEYOUTPUT": {
-              "Ref": "apirntictactoeGraphQLAPIKeyOutput"
+            "API_RNTICTAC_GRAPHQLAPIKEYOUTPUT": {
+              "Ref": "apirntictacGraphQLAPIKeyOutput"
             }
           }
         },
@@ -110,12 +110,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "rntictactoeLambdaRole5e223d34",
+            "rntictacLambdaRole8e2a973e",
             {
               "Fn::Join": [
                 "",
                 [
-                  "rntictactoeLambdaRole5e223d34",
+                  "rntictacLambdaRole8e2a973e",
                   "-",
                   {
                     "Ref": "env"
@@ -221,7 +221,27 @@
                       },
                       ":apis/",
                       {
-                        "Ref": "apirntictactoeGraphQLAPIIdOutput"
+                        "Ref": "apirntictacGraphQLAPIIdOutput"
+                      },
+                      "/types/Query/*"
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:appsync:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":apis/",
+                      {
+                        "Ref": "apirntictacGraphQLAPIIdOutput"
                       },
                       "/types/Mutation/*"
                     ]

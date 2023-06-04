@@ -1,7 +1,7 @@
 {
   "permissions": {
     "api": {
-      "rntictactoe": [
+      "rntictac": [
         "Query",
         "Mutation"
       ]

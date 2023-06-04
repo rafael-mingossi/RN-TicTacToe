@@ -1,41 +1,32 @@
 {
-  "test": {
+  "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-rntictactoe-test-130522-authRole",
-      "UnauthRoleArn": "arn:aws:iam::698637404117:role/amplify-rntictactoe-test-130522-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::698637404117:role/amplify-rntictactoe-test-130522-authRole",
+      "AuthRoleName": "amplify-rntictac-dev-212319-authRole",
+      "UnauthRoleArn": "arn:aws:iam::698637404117:role/amplify-rntictac-dev-212319-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::698637404117:role/amplify-rntictac-dev-212319-authRole",
       "Region": "ap-southeast-2",
-      "DeploymentBucketName": "amplify-rntictactoe-test-130522-deployment",
-      "UnauthRoleName": "amplify-rntictactoe-test-130522-unauthRole",
-      "StackName": "amplify-rntictactoe-test-130522",
-      "StackId": "arn:aws:cloudformation:ap-southeast-2:698637404117:stack/amplify-rntictactoe-test-130522/a8ce9120-f916-11ed-a3d1-06a78938ca58",
-      "AmplifyAppId": "d3arxi2c2ts6hb"
+      "DeploymentBucketName": "amplify-rntictac-dev-212319-deployment",
+      "UnauthRoleName": "amplify-rntictac-dev-212319-unauthRole",
+      "StackName": "amplify-rntictac-dev-212319",
+      "StackId": "arn:aws:cloudformation:ap-southeast-2:698637404117:stack/amplify-rntictac-dev-212319/35deb060-02ca-11ee-ae0b-0a01eba63b06",
+      "AmplifyAppId": "dj4076eeh3ggg"
     },
     "categories": {
       "auth": {
-        "rntictactoeea1bec6f": {}
+        "rntictacfd5bf92f": {}
       },
       "api": {
-        "rntictactoe": {}
+        "rntictac": {}
       },
       "function": {
-        "graphQlLambdaAuthorizer0dd52899": {
-          "deploymentBucketName": "amplify-rntictactoe-test-130522-deployment",
-          "s3Key": "amplify-builds/graphQlLambdaAuthorizer0dd52899-6b4f48373356504a4d53-build.zip"
+        "postConfirm": {
+          "deploymentBucketName": "amplify-rntictac-dev-212319-deployment",
+          "s3Key": "amplify-builds/postConfirm-2f73644f46334a377147-build.zip"
         },
-        "postConfirmation": {
-          "deploymentBucketName": "amplify-rntictactoe-test-130522-deployment",
-          "s3Key": "amplify-builds/postConfirmation-72722f6a4f7558634c79-build.zip"
-        },
-        "saveToDb": {
-          "deploymentBucketName": "amplify-rntictactoe-test-130522-deployment",
-          "s3Key": "amplify-builds/saveToDb-75547858464a676f324a-build.zip"
-        },
-        "preAuth": {
-          "deploymentBucketName": "amplify-rntictactoe-test-130522-deployment",
-          "s3Key": "amplify-builds/preAuth-444e78634878646f5442-build.zip"
-        },
-        "postSignUpSaveUserDb": {}
+        "preAuthUser": {
+          "deploymentBucketName": "amplify-rntictac-dev-212319-deployment",
+          "s3Key": "amplify-builds/preAuthUser-364550486e72776b5034-build.zip"
+        }
       }
     }
   }
