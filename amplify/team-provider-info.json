@@ -26,7 +26,9 @@
         "preAuthUser": {
           "deploymentBucketName": "amplify-rntictac-dev-212319-deployment",
           "s3Key": "amplify-builds/preAuthUser-364550486e72776b5034-build.zip"
-        }
+        },
+        "startGame": {},
+        "playMove": {}
       }
     }
   }
