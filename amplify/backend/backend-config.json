@@ -131,6 +131,22 @@
     }
   },
   "parameters": {
+    "AMPLIFY_function_playMove_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "playMove"
+        }
+      ]
+    },
+    "AMPLIFY_function_playMove_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "playMove"
+        }
+      ]
+    },
     "AMPLIFY_function_postConfirm_deploymentBucketName": {
       "usedBy": [
         {
@@ -160,6 +176,22 @@
         {
           "category": "function",
           "resourceName": "preAuthUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_startGame_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "startGame"
+        }
+      ]
+    },
+    "AMPLIFY_function_startGame_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "startGame"
         }
       ]
     }

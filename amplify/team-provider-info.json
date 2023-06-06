@@ -27,8 +27,14 @@
           "deploymentBucketName": "amplify-rntictac-dev-212319-deployment",
           "s3Key": "amplify-builds/preAuthUser-364550486e72776b5034-build.zip"
         },
-        "startGame": {},
-        "playMove": {}
+        "startGame": {
+          "deploymentBucketName": "amplify-rntictac-dev-212319-deployment",
+          "s3Key": "amplify-builds/startGame-70506b6c5864366c6e66-build.zip"
+        },
+        "playMove": {
+          "deploymentBucketName": "amplify-rntictac-dev-212319-deployment",
+          "s3Key": "amplify-builds/playMove-4c527661312f684e494a-build.zip"
+        }
       }
     }
   }
