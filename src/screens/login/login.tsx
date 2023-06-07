@@ -9,13 +9,16 @@ import { FC, useRef, useState } from "react";
 import { Auth } from "aws-amplify";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackNavigatorParams } from "@config/navigator";
+import { RouteProp } from "@react-navigation/native";
 import Toast from "react-native-toast-message";
 
 type LoginProps = {
   navigation: NativeStackNavigationProp<StackNavigatorParams, "Login">;
+  route: RouteProp<StackNavigatorParams, "Login">;
 };
 
-const Login: FC<LoginProps> = ({ navigation }) => {
+const Login: FC<LoginProps> = ({ navigation, route }) => {
+  const redirect = route.params?.redirect;
   const passwordRef = useRef<NativeTextInput | null>(null);
 
   const [form, setForm] = useState({
@@ -32,7 +35,7 @@ const Login: FC<LoginProps> = ({ navigation }) => {
     const { username, password } = form;
     try {
       await Auth.signIn(username, password);
-      navigation.navigate("Home");
+      redirect ? navigation.replace(redirect) : navigation.navigate("Home");
     } catch (error: any) {
       if (form.username === "" || form.password === "") {
         Toast.show({
@@ -66,7 +69,10 @@ const Login: FC<LoginProps> = ({ navigation }) => {
 
   return (
     <GradientBg>
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView
+        contentContainerStyle={styles.container}
+        keyboardShouldPersistTaps={"always"}
+      >
         <TextInput
           onChangeText={(val) => setFormInput("username", val)}
           value={form.username}

@@ -1,10 +1,9 @@
 import { StyleSheet } from "react-native";
-import { colours } from "@utils";
+import { colours, globalStyles } from "@utils";
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 40,
-    paddingHorizontal: 30,
+    ...globalStyles.container,
   },
   field: {
     marginBottom: 30,

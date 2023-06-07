@@ -14,6 +14,7 @@ type HomeProps = {
 const Home: FC<HomeProps> = ({ navigation }) => {
   const { user } = useAuth();
   const [signOutLoad, setSignOutLoad] = useState(false);
+
   return (
     <GradientBg>
       <ScrollView contentContainerStyle={styles.container}>
@@ -24,7 +25,19 @@ const Home: FC<HomeProps> = ({ navigation }) => {
             style={styles.button}
             title={"Single Player"}
           />
-          <Button style={styles.button} title={"Multiplayer"} />
+          <Button
+            onPress={() => {
+              if (user) {
+                navigation.navigate("MultiplayerHome");
+              } else {
+                navigation.navigate("Login", {
+                  redirect: "MultiplayerHome",
+                });
+              }
+            }}
+            style={styles.button}
+            title={"Multiplayer"}
+          />
           <Button
             loading={signOutLoad}
             style={styles.button}

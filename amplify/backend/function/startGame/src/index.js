@@ -59,7 +59,7 @@ exports.handler = async (event) => {
   }
 
   if (
-    !initiatorResponse.data.getPlayer.id === !inviteeResponse.data.getPlayer.id
+    initiatorResponse.data.getPlayer.id === inviteeResponse.data.getPlayer.id
   ) {
     throw new Error("Initiator cannot invite himself!");
   }

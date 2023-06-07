@@ -29,7 +29,7 @@
         },
         "startGame": {
           "deploymentBucketName": "amplify-rntictac-dev-212319-deployment",
-          "s3Key": "amplify-builds/startGame-70506b6c5864366c6e66-build.zip"
+          "s3Key": "amplify-builds/startGame-6f6f565a744366624273-build.zip"
         },
         "playMove": {
           "deploymentBucketName": "amplify-rntictac-dev-212319-deployment",

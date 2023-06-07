@@ -1,10 +1,9 @@
 import { StyleSheet } from "react-native";
-import { colours } from "@utils";
+import { colours, globalStyles } from "@utils";
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 30,
-    paddingVertical: 40,
+    ...globalStyles.container,
   },
   otpText: {
     color: colours.lightGreen,

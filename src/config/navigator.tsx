@@ -4,14 +4,22 @@ import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
 } from "@react-navigation/native-stack";
-import { Home, SinglePlayerGame, Settings, Login, SignUp } from "@screens";
+import {
+  Home,
+  SinglePlayerGame,
+  Settings,
+  Login,
+  SignUp,
+  MultiplayerHome,
+} from "@screens";
 import { colours } from "@utils";
 
 export type StackNavigatorParams = {
   Home: undefined;
   SinglePlayerGame: undefined;
   Settings: undefined;
-  Login: undefined;
+  Login: { redirect: keyof StackNavigatorParams } | undefined;
+  MultiplayerHome: undefined;
   SignUp: { username: string } | undefined;
 };
 
@@ -58,6 +66,11 @@ const Navigator: FC = () => {
           name="Login"
           component={Login}
           options={{ headerShown: true }}
+        />
+        <Stack.Screen
+          name="MultiplayerHome"
+          component={MultiplayerHome}
+          options={{ headerShown: true, title: "Multiplayer" }}
         />
         <Stack.Screen
           name="SignUp"

@@ -142,7 +142,10 @@ const Signup: FC<SignUpProps> = ({ navigation, route }) => {
         keyboardVerticalOffset={headerHeight}
         style={{ flex: 1 }}
       >
-        <ScrollView contentContainerStyle={styles.container}>
+        <ScrollView
+          contentContainerStyle={styles.container}
+          keyboardShouldPersistTaps={"always"}
+        >
           {step === "otp" ? (
             confirming ? (
               <ActivityIndicator color={colours.lightGreen} />
