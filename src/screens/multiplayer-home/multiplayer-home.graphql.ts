@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+import { GetPlayerQuery } from "@api";
 
 export const getPlayer = gql`
   query GetPlayer(
@@ -37,3 +38,22 @@ export const getPlayer = gql`
     }
   }
 `;
+
+export const onUpdateGameById = gql`
+  subscription onUpdateGameById($id: ID!) {
+    onUpdateGameById(id: $id) {
+      id
+      status
+      turn
+      state
+      winner
+    }
+  }
+`;
+
+//This will exclude NULL from the response, then we can type the response to the state
+export type PlayerGamesType = Exclude<
+  Exclude<GetPlayerQuery["getPlayer"], null>["games"],
+  null
+>["items"];
+export type PlayerGameType = Exclude<PlayerGamesType, null>[0];

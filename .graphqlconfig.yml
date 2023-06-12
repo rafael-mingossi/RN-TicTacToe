@@ -2,7 +2,7 @@ projects:
   rntictac:
     schemaPath: amplify/backend/api/rntictac/build/schema.graphql
     includes:
-      - src/graphql/**/*.ts
+      - src/**/*.graphql.ts
     excludes:
       - ./amplify/**
     extensions:
