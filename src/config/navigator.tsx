@@ -11,6 +11,7 @@ import {
   Login,
   SignUp,
   MultiplayerHome,
+  MultiplayerGame,
 } from "@screens";
 import { colours } from "@utils";
 
@@ -21,6 +22,9 @@ export type StackNavigatorParams = {
   Login: { redirect: keyof StackNavigatorParams } | undefined;
   MultiplayerHome: undefined;
   SignUp: { username: string } | undefined;
+  MultiplayerGame:
+    | { gameID: string; invitee?: undefined }
+    | { invitee: string; gameID?: undefined };
 };
 
 const Stack = createNativeStackNavigator<StackNavigatorParams>();
@@ -71,6 +75,11 @@ const Navigator: FC = () => {
           name="MultiplayerHome"
           component={MultiplayerHome}
           options={{ headerShown: true, title: "Multiplayer" }}
+        />
+        <Stack.Screen
+          name="MultiplayerGame"
+          component={MultiplayerGame}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="SignUp"

@@ -4,15 +4,19 @@ import styles from "./multiplayer-home.styles";
 import { Text } from "@components";
 import { colours } from "@utils";
 import { useAuth } from "@contexts/auth-context";
-import { ReactElement, useEffect, useState, useRef } from "react";
+import { ReactElement, useEffect, useState, useRef, FC } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import Observable from "zen-observable";
 
-const GameItem = ({
-  playerGame: playerGameProp,
-}: {
+type GameItemProps = {
   playerGame: PlayerGameType;
-}): null | ReactElement => {
+  onPress: () => void;
+};
+
+const GameItem: FC<GameItemProps> = ({
+  playerGame: playerGameProp,
+  onPress,
+}) => {
   const { user } = useAuth();
   const animationRef = useRef<Animated.Value>(new Animated.Value(0));
   const [playerGame, setPlayerGame] = useState(playerGameProp);
@@ -82,7 +86,7 @@ const GameItem = ({
   }, []);
 
   return (
-    <TouchableOpacity style={styles.item}>
+    <TouchableOpacity style={styles.item} onPress={() => onPress()}>
       <Animated.View
         style={[
           styles.itemBackground,

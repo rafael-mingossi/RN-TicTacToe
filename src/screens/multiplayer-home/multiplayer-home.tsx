@@ -18,9 +18,19 @@ import GameItem from "./game-item";
 import Modal from "react-native-modal";
 import PlayerModal from "./players-modal/players-modal";
 import { Logs } from "expo";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { StackNavigatorParams } from "@config/navigator";
 Logs.enableExpoCliLogging();
 
-const MultiplayerHome: FC = () => {
+type MultiplayerHomeScreenNavigationProp = NativeStackNavigationProp<
+  StackNavigatorParams,
+  "MultiplayerHome"
+>;
+type MultiplayerHomeProps = {
+  navigation: MultiplayerHomeScreenNavigationProp;
+};
+
+const MultiplayerHome: FC<MultiplayerHomeProps> = ({ navigation }) => {
   const { user } = useAuth();
 
   const [playerGames, setPlayerGames] = useState<PlayerGameType[] | null>(null);
@@ -47,7 +57,7 @@ const MultiplayerHome: FC = () => {
         )) as GraphQLResult<GetPlayerQuery>;
 
         if (player.data?.getPlayer?.games) {
-          const newPlayerGames = player.data.getPlayer.games.items || null;
+          const newPlayerGames = player.data.getPlayer.games.items || [];
           setPlayerGames(
             !playerGames || nextToken === null
               ? newPlayerGames
@@ -74,7 +84,18 @@ const MultiplayerHome: FC = () => {
           <FlatList
             contentContainerStyle={styles.container}
             data={playerGames}
-            renderItem={({ item }) => <GameItem playerGame={item} />}
+            renderItem={({ item }) => (
+              <GameItem
+                onPress={() => {
+                  if (item?.game) {
+                    navigation.navigate("MultiplayerGame", {
+                      gameID: item?.game.id,
+                    });
+                  }
+                }}
+                playerGame={item}
+              />
+            )}
             refreshControl={
               <RefreshControl
                 refreshing={refreshing}
@@ -135,7 +156,12 @@ const MultiplayerHome: FC = () => {
         onBackButtonPress={() => setPlayersModal(false)}
         onBackdropPress={() => setPlayersModal(false)}
       >
-        <PlayerModal />
+        <PlayerModal
+          onItemPress={(username) => {
+            setPlayersModal(false);
+            navigation.navigate("MultiplayerGame", { invitee: username });
+          }}
+        />
       </Modal>
     </GradientBg>
   );

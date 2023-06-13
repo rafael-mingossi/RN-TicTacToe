@@ -4,3 +4,4 @@ export { default as Settings } from "./settings/settings";
 export { default as Login } from "./login/login";
 export { default as SignUp } from "./signup/signup";
 export { default as MultiplayerHome } from "./multiplayer-home/multiplayer-home";
+export { default as MultiplayerGame } from "./multiplayer-game/multiplayer-game";

@@ -10,7 +10,7 @@ import { API, graphqlOperation } from "aws-amplify";
 import { searchPlayers } from "../multiplayer-home.graphql";
 import { GraphQLResult } from "@aws-amplify/api";
 import { searchPlayersQuery } from "@api";
-import { useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { colours } from "@utils";
 import styles from "./players-modal.styles";
 
@@ -19,7 +19,11 @@ type PlayersListType = Exclude<
   null
 >["items"];
 
-const PlayersModal = () => {
+type PlayerModalProps = {
+  onItemPress: (username: string) => void;
+};
+
+const PlayersModal: FC<PlayerModalProps> = ({ onItemPress }) => {
   const [players, setPlayers] = useState<PlayersListType | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [submittedQuery, setSubmittedQuery] = useState("");
@@ -83,7 +87,14 @@ const PlayersModal = () => {
               data={players}
               renderItem={({ item }) => {
                 return (
-                  <TouchableOpacity style={styles.playerItem}>
+                  <TouchableOpacity
+                    style={styles.playerItem}
+                    onPress={() => {
+                      if (item) {
+                        onItemPress(item?.username);
+                      }
+                    }}
+                  >
                     <Text
                       style={{
                         color: colours.lightGreen,
