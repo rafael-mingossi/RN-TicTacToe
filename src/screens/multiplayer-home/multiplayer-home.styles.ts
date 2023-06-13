@@ -16,11 +16,13 @@ const styles = StyleSheet.create({
     backgroundColor: colours.lightPurple,
     padding: 20,
     paddingBottom: 30,
+    justifyContent: "center",
   },
   newGameBtnTxt: {
     color: colours.lightGreen,
     textAlign: "center",
     fontSize: 17,
+    justifyContent: "center",
   },
   loading: {
     flex: 1,
@@ -32,6 +34,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 17,
     marginBottom: 10,
+  },
+  itemBackground: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
 });
 

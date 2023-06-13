@@ -15,6 +15,8 @@ import { API, graphqlOperation } from "aws-amplify";
 import { GraphQLResult } from "@aws-amplify/api";
 import { GetPlayerQuery } from "@api";
 import GameItem from "./game-item";
+import Modal from "react-native-modal";
+import PlayerModal from "./players-modal/players-modal";
 import { Logs } from "expo";
 Logs.enableExpoCliLogging();
 
@@ -25,6 +27,7 @@ const MultiplayerHome: FC = () => {
   const [nextToken, setNextToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [playersModal, setPlayersModal] = useState(false);
 
   const fetchPlayer = async (nextToken: string | null, init?: boolean) => {
     if (user) {
@@ -110,7 +113,10 @@ const MultiplayerHome: FC = () => {
               );
             }}
           />
-          <TouchableOpacity style={styles.newGameBtn}>
+          <TouchableOpacity
+            style={styles.newGameBtn}
+            onPress={() => setPlayersModal(true)}
+          >
             <Text style={styles.newGameBtnTxt}>New Game</Text>
           </TouchableOpacity>
         </>
@@ -121,6 +127,16 @@ const MultiplayerHome: FC = () => {
           </Text>
         </View>
       )}
+      <Modal
+        style={{ margin: 0 }}
+        isVisible={playersModal}
+        avoidKeyboard
+        backdropOpacity={0.75}
+        onBackButtonPress={() => setPlayersModal(false)}
+        onBackdropPress={() => setPlayersModal(false)}
+      >
+        <PlayerModal />
+      </Modal>
     </GradientBg>
   );
 };

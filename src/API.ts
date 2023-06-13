@@ -64,6 +64,13 @@ export enum Symbol {
   o = "o",
 }
 
+export type SearchablePlayerConnection = {
+  __typename: "SearchablePlayerConnection";
+  items: Array<Player | null>;
+  nextToken?: string | null;
+  total?: number | null;
+};
+
 export type GetPlayerQueryVariables = {
   username: string;
   limit?: number | null;
@@ -87,7 +94,7 @@ export type GetPlayerQuery = {
           status: GameStatus;
           turn: string;
           winner?: string | null;
-          players: {
+          players?: {
             __typename: "ModelPlayerGameConnection";
             items: Array<{
               __typename: "PlayerGame";
@@ -100,7 +107,7 @@ export type GetPlayerQuery = {
           } | null;
         };
       } | null>;
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
   } | null;
 };
@@ -110,12 +117,30 @@ export type onUpdateGameByIdSubscriptionVariables = {
 };
 
 export type onUpdateGameByIdSubscription = {
-  onUpdateGameById?: {
+  onUpdateGameById: {
     __typename: "Game";
     id: string;
     status: GameStatus;
     turn: string;
     state: Array<Symbol | null>;
     winner?: string | null;
+  } | null;
+};
+
+export type searchPlayersQueryVariables = {
+  limit?: number | null;
+  nextToken?: string | null;
+  searchString?: string | null;
+};
+
+export type searchPlayersQuery = {
+  searchPlayers: {
+    __typename: "SearchablePlayerConnection";
+    items: Array<{
+      __typename: "Player";
+      name: string;
+      username: string;
+    } | null>;
+    nextToken?: string | null;
   } | null;
 };

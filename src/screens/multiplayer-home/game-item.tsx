@@ -1,20 +1,21 @@
 import { PlayerGameType, onUpdateGameById } from "./multiplayer-home.graphql";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, Animated } from "react-native";
 import styles from "./multiplayer-home.styles";
 import { Text } from "@components";
 import { colours } from "@utils";
 import { useAuth } from "@contexts/auth-context";
-import { ReactElement, useEffect } from "react";
+import { ReactElement, useEffect, useState, useRef } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import Observable from "zen-observable";
 
 const GameItem = ({
-  playerGame,
+  playerGame: playerGameProp,
 }: {
   playerGame: PlayerGameType;
 }): null | ReactElement => {
   const { user } = useAuth();
-
+  const animationRef = useRef<Animated.Value>(new Animated.Value(0));
+  const [playerGame, setPlayerGame] = useState(playerGameProp);
   const getResult = (
     playerGame: PlayerGameType
   ): "win" | "loss" | "draw" | false => {
@@ -47,7 +48,30 @@ const GameItem = ({
 
       const subscription = gameUpdates.subscribe({
         next: ({ value }) => {
-          console.log("#########################value: ", value);
+          const newGame = value.data.onUpdateGameById;
+
+          if (newGame) {
+            setPlayerGame({
+              ...playerGame,
+              ["game"]: { ...playerGame?.game, ...newGame },
+            });
+            if (newGame.status === "FINISHED") {
+              subscription.unsubscribe();
+            }
+            Animated.sequence([
+              Animated.timing(animationRef.current, {
+                toValue: 1,
+                duration: 500,
+                useNativeDriver: false,
+              }),
+              Animated.delay(1000),
+              Animated.timing(animationRef.current, {
+                toValue: 0,
+                duration: 500,
+                useNativeDriver: false,
+              }),
+            ]).start();
+          }
         },
       });
 
@@ -59,6 +83,17 @@ const GameItem = ({
 
   return (
     <TouchableOpacity style={styles.item}>
+      <Animated.View
+        style={[
+          styles.itemBackground,
+          {
+            backgroundColor: animationRef.current.interpolate({
+              inputRange: [0, 1],
+              outputRange: [colours.purple, colours.lightPurple],
+            }),
+          },
+        ]}
+      />
       <Text style={styles.cardTxt}>
         {opponent?.player.name} ({opponent?.player.username})
       </Text>
