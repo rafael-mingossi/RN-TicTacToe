@@ -35,7 +35,10 @@ const PlayersModal: FC<PlayerModalProps> = ({ onItemPress }) => {
     setSubmittedQuery(searchString);
     try {
       const players = (await API.graphql(
-        graphqlOperation(searchPlayers, { limit: 10, searchString })
+        graphqlOperation(searchPlayers, {
+          limit: 10,
+          searchString: searchString,
+        })
       )) as GraphQLResult<searchPlayersQuery>;
 
       if (players.data?.searchPlayers) {

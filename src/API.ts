@@ -93,7 +93,7 @@ export type getGameQuery = {
     initiator: string;
     turn: string;
     state: Array<Symbol | null>;
-    winner: string | null;
+    winner?: string | null;
     players: {
       __typename: "ModelPlayerGameConnection";
       items: Array<{
@@ -113,7 +113,7 @@ export type startGameMutationVariables = {
 };
 
 export type startGameMutation = {
-  startGame?: {
+  startGame: {
     __typename: "GameData";
     id: string;
   } | null;
@@ -128,6 +128,10 @@ export type playMoveMutation = {
   playMove: {
     __typename: "GameData";
     id: string;
+    status: GameStatus;
+    turn: string;
+    state: Array<Symbol | null>;
+    winner?: string | null;
   } | null;
 };
 
