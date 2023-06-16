@@ -1,10 +1,10 @@
-import { PlayerGameType, onUpdateGameById } from "./multiplayer-home.graphql";
+import { PlayerGameType } from "./multiplayer-home.graphql";
 import { TouchableOpacity, Animated } from "react-native";
 import styles from "./multiplayer-home.styles";
 import { Text } from "@components";
-import { colours } from "@utils";
+import { colours, onUpdateGameById } from "@utils";
 import { useAuth } from "@contexts/auth-context";
-import { ReactElement, useEffect, useState, useRef, FC } from "react";
+import { useEffect, useState, useRef, FC } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import Observable from "zen-observable";
 
