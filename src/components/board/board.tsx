@@ -1,7 +1,7 @@
-import { View, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity, ActivityIndicator } from "react-native";
 import { FC } from "react";
 import Text from "../text/text";
-import { BoardResult, BoardState } from "@utils";
+import { BoardResult, BoardState, colours, Moves } from "@utils";
 import BoardLine from "./board-line";
 import styles from "./board.style";
 
@@ -11,6 +11,7 @@ type BoardProps = {
   disabled?: boolean;
   onCellPressed?: (index: number) => void;
   gameResult?: BoardResult | false;
+  loading?: Moves | false;
 };
 const Board: FC<BoardProps> = ({
   state,
@@ -18,6 +19,7 @@ const Board: FC<BoardProps> = ({
   disabled,
   gameResult,
   onCellPressed,
+  loading,
 }) => {
   return (
     <View
@@ -37,12 +39,16 @@ const Board: FC<BoardProps> = ({
             key={index}
             style={[styles.cell, styles[`cell${index}` as "cell"]]}
           >
-            <Text
-              weight={"700"}
-              style={[{ fontSize: size / 7 }, styles.cellText]}
-            >
-              {cell}
-            </Text>
+            {loading === index ? (
+              <ActivityIndicator color={colours.lightGreen} />
+            ) : (
+              <Text
+                weight={"700"}
+                style={[{ fontSize: size / 7 }, styles.cellText]}
+              >
+                {cell}
+              </Text>
+            )}
           </TouchableOpacity>
         );
       })}

@@ -1,0 +1,12 @@
+{
+  "AppSyncApiName": "rntictac",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authrntictacfd5bf92f",
+      "Outputs.UserPoolId"
+    ]
+  },
+  "AuthModeLastUpdated": "2023-06-04T12:26:06.530Z"
+}

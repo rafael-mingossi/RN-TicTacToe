@@ -1,0 +1,41 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-rntictac-dev-212319-authRole",
+      "UnauthRoleArn": "arn:aws:iam::698637404117:role/amplify-rntictac-dev-212319-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::698637404117:role/amplify-rntictac-dev-212319-authRole",
+      "Region": "ap-southeast-2",
+      "DeploymentBucketName": "amplify-rntictac-dev-212319-deployment",
+      "UnauthRoleName": "amplify-rntictac-dev-212319-unauthRole",
+      "StackName": "amplify-rntictac-dev-212319",
+      "StackId": "arn:aws:cloudformation:ap-southeast-2:698637404117:stack/amplify-rntictac-dev-212319/35deb060-02ca-11ee-ae0b-0a01eba63b06",
+      "AmplifyAppId": "dj4076eeh3ggg"
+    },
+    "categories": {
+      "auth": {
+        "rntictacfd5bf92f": {}
+      },
+      "api": {
+        "rntictac": {}
+      },
+      "function": {
+        "postConfirm": {
+          "deploymentBucketName": "amplify-rntictac-dev-212319-deployment",
+          "s3Key": "amplify-builds/postConfirm-2f73644f46334a377147-build.zip"
+        },
+        "preAuthUser": {
+          "deploymentBucketName": "amplify-rntictac-dev-212319-deployment",
+          "s3Key": "amplify-builds/preAuthUser-364550486e72776b5034-build.zip"
+        },
+        "startGame": {
+          "deploymentBucketName": "amplify-rntictac-dev-212319-deployment",
+          "s3Key": "amplify-builds/startGame-6f6f565a744366624273-build.zip"
+        },
+        "playMove": {
+          "deploymentBucketName": "amplify-rntictac-dev-212319-deployment",
+          "s3Key": "amplify-builds/playMove-4c527661312f684e494a-build.zip"
+        }
+      }
+    }
+  }
+}
