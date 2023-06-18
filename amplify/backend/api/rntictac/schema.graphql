@@ -2,6 +2,8 @@ type Mutation {
   startGame(invitee: String!): GameData @function(name: "startGame-${env}") @aws_cognito_user_pools
 
   playMove(game: ID!, index:Int!): GameData @function(name: "playMove-${env}") @aws_cognito_user_pools
+
+  addExpoToken(token: String!): ExpoToken @function(name: "addExpoToken-${env}") @aws_cognito_user_pools
 }
 
 type Subscription {
@@ -33,6 +35,7 @@ type Player
     name: String!
     email: AWSEmail!
     games: [PlayerGame!] @connection(keyName: "byPlayer", fields: ["username"])
+    tokens: [ExpoToken] @connection(keyName: "byPlayer", fields: ["username"])
   }
 
 type PlayerGame
@@ -87,4 +90,26 @@ enum GameStatus{
 enum Symbol {
   x
   o
+}
+
+type ExpoToken
+  @model
+  @key(fields: ["token"])
+  @key(name: "byPlayer", fields: ["playerUsername"])
+  @auth(rules: [
+    {allow: owner, ownerField: "playerUsername", operations: [read, delete]}
+    {allow: private, provider: iam, operations: [read, create, update, delete]}
+  ])
+{
+  id: ID!
+  token: String!
+  playerUsername: String!
+}
+
+type ExpoTicketsObject
+  @model
+  @auth(rules: [
+    {allow: private, provider: iam, operations: [read, create, update, delete]}] ){
+  id: ID!
+  tickets: AWSJSON!
 }

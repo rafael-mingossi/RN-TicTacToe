@@ -24,6 +24,17 @@ export const playMove = /* GraphQL */ `
     }
   }
 `;
+export const addExpoToken = /* GraphQL */ `
+  mutation AddExpoToken($token: String!) {
+    addExpoToken(token: $token) {
+      id
+      token
+      playerUsername
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createPlayer = /* GraphQL */ `
   mutation CreatePlayer(
     $input: CreatePlayerInput!
@@ -44,6 +55,16 @@ export const createPlayer = /* GraphQL */ `
           gameID
           playerUsername
           owners
+          updatedAt
+        }
+        nextToken
+      }
+      token {
+        items {
+          id
+          token
+          playerUsername
+          createdAt
           updatedAt
         }
         nextToken
@@ -75,6 +96,16 @@ export const updatePlayer = /* GraphQL */ `
         }
         nextToken
       }
+      token {
+        items {
+          id
+          token
+          playerUsername
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -98,6 +129,16 @@ export const deletePlayer = /* GraphQL */ `
           gameID
           playerUsername
           owners
+          updatedAt
+        }
+        nextToken
+      }
+      token {
+        items {
+          id
+          token
+          playerUsername
+          createdAt
           updatedAt
         }
         nextToken
@@ -126,6 +167,9 @@ export const createPlayerGame = /* GraphQL */ `
         createdAt
         updatedAt
         games {
+          nextToken
+        }
+        token {
           nextToken
         }
       }
@@ -169,6 +213,9 @@ export const updatePlayerGame = /* GraphQL */ `
         games {
           nextToken
         }
+        token {
+          nextToken
+        }
       }
       game {
         id
@@ -208,6 +255,9 @@ export const deletePlayerGame = /* GraphQL */ `
         createdAt
         updatedAt
         games {
+          nextToken
+        }
+        token {
           nextToken
         }
       }
@@ -312,6 +362,48 @@ export const deleteGame = /* GraphQL */ `
         }
         nextToken
       }
+    }
+  }
+`;
+export const createExpoToken = /* GraphQL */ `
+  mutation CreateExpoToken(
+    $input: CreateExpoTokenInput!
+    $condition: ModelExpoTokenConditionInput
+  ) {
+    createExpoToken(input: $input, condition: $condition) {
+      id
+      token
+      playerUsername
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateExpoToken = /* GraphQL */ `
+  mutation UpdateExpoToken(
+    $input: UpdateExpoTokenInput!
+    $condition: ModelExpoTokenConditionInput
+  ) {
+    updateExpoToken(input: $input, condition: $condition) {
+      id
+      token
+      playerUsername
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteExpoToken = /* GraphQL */ `
+  mutation DeleteExpoToken(
+    $input: DeleteExpoTokenInput!
+    $condition: ModelExpoTokenConditionInput
+  ) {
+    deleteExpoToken(input: $input, condition: $condition) {
+      id
+      token
+      playerUsername
+      createdAt
+      updatedAt
     }
   }
 `;

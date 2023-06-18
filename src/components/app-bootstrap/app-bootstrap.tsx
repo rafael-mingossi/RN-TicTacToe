@@ -7,6 +7,7 @@ import {
 import * as SplashScreen from "expo-splash-screen";
 import { useAuth } from "@contexts/auth-context";
 import { Auth, Hub } from "aws-amplify";
+import { initNotifications } from "@utils";
 
 SplashScreen.preventAutoHideAsync().then(() => {});
 
@@ -37,6 +38,8 @@ const AppBootstrap: FC<AppBootstrapProps> = ({ children }) => {
       try {
         const user = await Auth.currentAuthenticatedUser();
         setUser(user);
+        // @ts-ignore
+        initNotifications();
       } catch (e) {
         setUser(null);
       }
@@ -56,6 +59,8 @@ const AppBootstrap: FC<AppBootstrapProps> = ({ children }) => {
 
         case "signIn":
           setUser(data);
+          // @ts-ignore
+          initNotifications();
           break;
 
         default:
