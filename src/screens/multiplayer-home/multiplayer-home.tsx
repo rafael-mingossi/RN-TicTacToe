@@ -20,6 +20,7 @@ import PlayerModal from "./players-modal/players-modal";
 import { Logs } from "expo";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackNavigatorParams } from "@config/navigator";
+import * as Notifications from "expo-notifications";
 Logs.enableExpoCliLogging();
 
 type MultiplayerHomeScreenNavigationProp = NativeStackNavigationProp<
@@ -64,6 +65,7 @@ const MultiplayerHome: FC<MultiplayerHomeProps> = ({ navigation }) => {
               : [...playerGames, ...newPlayerGames]
           );
           setNextToken(player.data.getPlayer.games.nextToken);
+          await Notifications.setBadgeCountAsync(0);
         }
       } catch (e) {
         console.log(e);

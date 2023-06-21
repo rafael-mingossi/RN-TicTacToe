@@ -29,7 +29,7 @@
         },
         "startGame": {
           "deploymentBucketName": "amplify-rntictac-dev-212319-deployment",
-          "s3Key": "amplify-builds/startGame-6f6f565a744366624273-build.zip"
+          "s3Key": "amplify-builds/startGame-4e775076497970484e65-build.zip"
         },
         "playMove": {
           "deploymentBucketName": "amplify-rntictac-dev-212319-deployment",
@@ -38,6 +38,10 @@
         "addExpoToken": {
           "deploymentBucketName": "amplify-rntictac-dev-212319-deployment",
           "s3Key": "amplify-builds/addExpoToken-4849594e39626c5a666b-build.zip"
+        },
+        "handleExpoTickets": {
+          "deploymentBucketName": "amplify-rntictac-dev-212319-deployment",
+          "s3Key": "amplify-builds/handleExpoTickets-736748516c6e4163664a-build.zip"
         }
       }
     }

@@ -1,5 +1,10 @@
-import { FC } from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import { FC, useEffect, useState, useRef } from "react";
+import {
+  NavigationContainer,
+  NavigationContainerRef,
+  ParamListBase,
+  StackActions,
+} from "@react-navigation/native";
 import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
@@ -14,6 +19,8 @@ import {
   MultiplayerGame,
 } from "@screens";
 import { colours } from "@utils";
+import { useAuth } from "@contexts/auth-context";
+import * as Notifications from "expo-notifications";
 
 export type StackNavigatorParams = {
   Home: undefined;
@@ -48,8 +55,47 @@ const navigationOptions: NativeStackNavigationOptions = {
   },
 };
 const Navigator: FC = () => {
+  const { user } = useAuth();
+  const navigatorRef =
+    useRef<NavigationContainerRef<StackNavigatorParams> | null>(null);
+  const [isNavigatorReady, setIsNavigatorReady] = useState(false);
+
+  useEffect(() => {
+    if (user && isNavigatorReady) {
+      //HANDLE CLICK IN PUSH NOTIFICATION
+      const subscription =
+        Notifications.addNotificationResponseReceivedListener((response) => {
+          console.log(response);
+          const gameID = response.notification.request.content.data.gameId;
+
+          //IN CASE USER IS ALREADY IN MULTI PLAYER GAME SCREEN IT WILL NEED TO PUSH OR REPLACE BUT NOT NAVIGATE
+          if (
+            navigatorRef.current?.getCurrentRoute()?.name === "MultiplayerGame"
+          ) {
+            navigatorRef.current?.dispatch(
+              //Using replace, will make the user return to the home page when pressing back
+              //If the user needs to return to te previous page, replace should be changed to push
+              StackActions.replace("MultiplayerGame", { gameID })
+            );
+          } else {
+            navigatorRef.current?.navigate("MultiplayerGame", { gameID });
+          }
+        });
+
+      //UNSUBSCRIBE FROM THE EVENT
+      return () => {
+        subscription.remove();
+      };
+    }
+  }, [user, isNavigatorReady]);
+
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      ref={navigatorRef}
+      onReady={() => {
+        setIsNavigatorReady(true);
+      }}
+    >
       <Stack.Navigator screenOptions={navigationOptions}>
         <Stack.Screen
           name="Home"

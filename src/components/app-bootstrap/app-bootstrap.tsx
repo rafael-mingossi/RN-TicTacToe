@@ -8,8 +8,18 @@ import * as SplashScreen from "expo-splash-screen";
 import { useAuth } from "@contexts/auth-context";
 import { Auth, Hub } from "aws-amplify";
 import { initNotifications } from "@utils";
+import * as Notifications from "expo-notifications";
 
 SplashScreen.preventAutoHideAsync().then(() => {});
+
+//THIS WILL RECEIVE A NOTIFICATION WHEN THE APP IS IN THE FOREGROUND
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 type AppBootstrapProps = {
   children: ReactNode;
