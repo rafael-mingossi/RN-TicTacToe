@@ -4,7 +4,7 @@ import gql from "graphql-tag";
 import { API, Auth, graphqlOperation } from "aws-amplify";
 
 const signOut = async (): Promise<void> => {
-  if (Device.isDevice) {
+  if (Device?.isDevice) {
     const tokenRes = await Notifications.getExpoPushTokenAsync();
     const deleteExpoToken = gql`
       mutation deleteExpoToken($token: String!) {

@@ -14,7 +14,7 @@ const addExpoToken = gql`
 `;
 
 const initNotifications = async (): Promise<void> => {
-  if (Device.isDevice) {
+  if (Device?.isDevice) {
     const { status: existingStatus } =
       await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;

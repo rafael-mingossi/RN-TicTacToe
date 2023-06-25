@@ -27,11 +27,19 @@
       "useNextNotificationsApi": true,
       "package": "com.mingossi.tictactoe",
       "versionCode": 1,
-      "googleServicesFile": "./google-services.json",
-      "android_app_id": "com.mingossi.tictactoe"
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "26bacfae-750e-4af2-81cc-6f3b5fac1faf"
+      }
     }
+  },
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-7969325323238600~1223393544",
+    "ios_app_id": "ca-app-pub-7969325323238600~4879567525"
   }
 }

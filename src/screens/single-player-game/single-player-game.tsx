@@ -4,6 +4,11 @@ import { GradientBg, Board, Text, Button } from "@components";
 import { FC, useEffect, useState } from "react";
 import { BoardState, isTerminal, getBestMove, isEmpty, Cell } from "@utils";
 import { useSettings, difficulties } from "@contexts/settings-context";
+import {
+  InterstitialAd,
+  TestIds,
+  AdEventType,
+} from "react-native-google-mobile-ads";
 // @ts-ignore
 import { useSounds } from "@hooks";
 
@@ -33,6 +38,24 @@ const SinglePlayerGame: FC = () => {
     losses: 0,
     draws: 0,
   });
+
+  const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL, {
+    requestNonPersonalizedAdsOnly: true,
+    keywords: ["gaming", "clothing"],
+  });
+
+  const showAd = async () => {
+    try {
+      await interstitial.load();
+      setTimeout(() => {
+        interstitial.show().then((p) => {
+          console.log(p);
+        });
+      }, 2000);
+    } catch (e) {
+      console.log("ADS ->", e);
+    }
+  };
 
   const gameResult = isTerminal(state);
 
@@ -89,6 +112,12 @@ const SinglePlayerGame: FC = () => {
       if (winner === "DRAW") {
         playSound("draw");
         setGamesCount({ ...gamesCount, draws: gamesCount.draws + 1 });
+      }
+
+      const totalGames = gamesCount.wins + gamesCount.draws + gamesCount.losses;
+
+      if (totalGames % 3 === 0) {
+        showAd().then(() => {});
       }
     } else {
       if (turn === "BOT") {
